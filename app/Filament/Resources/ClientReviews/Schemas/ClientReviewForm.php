@@ -58,29 +58,29 @@ class ClientReviewForm
                 ->schema([
                     TextInput::make('fullname')
                         ->label('Имя (RU)')
-                        ->visible(fn($get) => $get('../../language') === 'ru')
+
                         ->required(),
 
                     TextInput::make('fullname_kk')
-                        ->label('Имя (KK)')
-                        ->visible(fn($get) => $get('../../language') === 'kk'),
+                        ->label('Имя (KK)'),
+
 
                     TextInput::make('fullname_en')
-                        ->label('Имя (EN)')
-                        ->visible(fn($get) => $get('../../language') === 'en'),
+                        ->label('Имя (EN)'),
+
 
                     TextInput::make('text')
                         ->label('Текст (RU)')
-                        ->visible(fn($get) => $get('../../language') === 'ru')
+
                         ->required(),
 
                     TextInput::make('text_kk')
-                        ->label('Текст (KK)')
-                        ->visible(fn($get) => $get('../../language') === 'kk'),
+                        ->label('Текст (KK)'),
+
 
                     TextInput::make('text_en')
                         ->label('Текст (EN)')
-                        ->visible(fn($get) => $get('../../language') === 'en'),
+
                 ])
                 ->columns(1)
                 ->columnSpanFull(),

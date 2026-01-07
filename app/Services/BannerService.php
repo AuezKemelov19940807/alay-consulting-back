@@ -88,6 +88,7 @@ class BannerService
                 'text' => $f->{'text_'.$locale} ?? $f->text,
             ]),
             'sliders' => $banner->sliders->map(fn($s) => (object)[
+                'title' => $s->{'title_'.$locale} ?? $s->title,
                 'image' => $s->image
                     ? asset('storage/' . $s->image)
                     : null,

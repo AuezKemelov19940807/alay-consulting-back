@@ -39,17 +39,20 @@ class OurServiceForm
                 }),
 
             // Заголовок блока
-            TextInput::make('data.title.ru')
+            TextInput::make('title')
                 ->label('Заголовок (RU)')
                 ->visible(fn($get) => $get('language') === 'ru')
                 ->columnSpanFull(),
 
-            TextInput::make('data.title.kk')
+
+
+
+            TextInput::make('title_kk')
                 ->label('Заголовок (KK)')
                 ->visible(fn($get) => $get('language') === 'kk')
                 ->columnSpanFull(),
 
-            TextInput::make('data.title.en')
+            TextInput::make('title_en')
                 ->label('Заголовок (EN)')
                 ->visible(fn($get) => $get('language') === 'en')
                 ->columnSpanFull(),
@@ -68,20 +71,20 @@ class OurServiceForm
                     // ===== Левая колонка =====
                     TextInput::make('title.ru')
                         ->label('Название (RU)')
-                        ->visible(fn($get) => $get('../../../language') === 'ru')
+
                         ->columnSpan(1),
 
 
                     // ===== Левая колонка =====
                     TextInput::make('title.en')
                         ->label('Название (EN)')
-                        ->visible(fn($get) => $get('../../../language') === 'en')
+
                         ->columnSpan(1),
 
                     // ===== Левая колонка =====
                     TextInput::make('title.kk')
                         ->label('Название (KK)')
-                        ->visible(fn($get) => $get('../../../language') === 'kk')
+
                         ->columnSpan(1),
 
                     FileUpload::make('icon')

@@ -62,32 +62,29 @@ class FaqForm
                     /* Вопрос */
                     TextInput::make('question.ru')
                         ->label('Вопрос (RU)')
-                        ->visible(fn ($get) => $get('../../language') === 'ru')
+
                         ->required(),
 
                     TextInput::make('question.kk')
-                        ->label('Вопрос (KK)')
-                        ->visible(fn ($get) => $get('../../language') === 'kk'),
+                        ->label('Вопрос (KK)'),
+
 
                     TextInput::make('question.en')
-                        ->label('Вопрос (EN)')
-                        ->visible(fn ($get) => $get('../../language') === 'en'),
+                        ->label('Вопрос (EN)'),
 
                     Textarea::make('answer.ru')
                         ->label('Ответ (RU)')
                         ->rows(3)
-                        ->visible(fn ($get) => $get('../../language') === 'ru')
+
                         ->required(),
 
                     Textarea::make('answer.kk')
                         ->label('Ответ (KK)')
-                        ->rows(3)
-                        ->visible(fn ($get) => $get('../../language') === 'kk'),
+                        ->rows(3),
 
                     Textarea::make('answer.en')
                         ->label('Ответ (EN)')
-                        ->rows(3)
-                        ->visible(fn ($get) => $get('../../language') === 'en'),
+                        ->rows(3),
                 ])
                 ->columns(1)
                 ->columnSpanFull()

@@ -36,18 +36,18 @@ class WhyChooseUsForm
                     }
                 }),
             // Заголовок
-            TextInput::make('title.ru')
+            TextInput::make('title')
                 ->label('Заголовок (RU)')
                 ->visible(fn($get) => $get('language') === 'ru')
                 ->required()
                 ->columnSpanFull(),
 
-            TextInput::make('title.kk')
+            TextInput::make('title_kk')
                 ->label('Заголовок (KK)')
                 ->visible(fn($get) => $get('language') === 'kk')
                 ->columnSpanFull(),
 
-            TextInput::make('title.en')
+            TextInput::make('title_en')
                 ->label('Заголовок (EN)')
                 ->visible(fn($get) => $get('language') === 'en')
                 ->columnSpanFull(),
@@ -70,17 +70,17 @@ class WhyChooseUsForm
                         ->required(),
 
                     TextInput::make('text')
-                        ->label('Текст (RU)')
-                        ->required()
-                        ->visible(fn ($get) => $get('../../language') === 'ru'),
+                        ->label('Текст (RU)'),
+
+
 
                     TextInput::make('text_kk')
-                        ->label('Текст (KK)')
-                        ->visible(fn ($get) => $get('../../language') === 'kk'),
+                        ->label('Текст (KK)'),
+
 
                     TextInput::make('text_en')
                         ->label('Text (EN)')
-                        ->visible(fn ($get) => $get('../../language') === 'en'),
+
 
                 ])
                 ->columns(1)

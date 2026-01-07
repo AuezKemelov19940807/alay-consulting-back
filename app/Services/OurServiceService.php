@@ -29,8 +29,8 @@ class OurServiceService
         $data = $service->data;
 
         return (object)[
-            'title' => $data['title'][$locale]
-                ?? ($data['title']['ru'] ?? ''),
+            'title' => $service->{'title_'.$locale} ?? $service->title,
+
 
             'items' => collect($data['items'] ?? [])->map(function ($item) use ($locale) {
                 return (object)[

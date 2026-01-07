@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class OurService extends Model
 {
-    protected $fillable = ['data'];
+    protected $fillable = [
+        'title',
+        'title_kk',
+        'title_en',
+
+        'data'];
 
     protected $casts = [
         'data' => 'array', // автоматически конвертирует JSON в массив

@@ -6,23 +6,53 @@ use App\Models\WhyChooseUs;
 
 class WhyChooseUsService
 {
-    /**
-     * Получить первую запись или создать дефолтную.
-     */
-    public function getFirst(string $locale = 'ru'): object
+    public function get(string $locale = 'ru'): object
     {
         $record = WhyChooseUs::first();
 
-        if (! $record) {
+        if (!$record) {
             $record = $this->createDefault();
         }
 
-        return $this->format($record, $locale);
+        $items = $record->items ?? [];
+
+        return (object)[
+            'title' => $this->resolveTitle($record, $locale),
+            'image' => $record->image ? asset('storage/' . $record->image) : null,
+            'items' => collect($items)->map(function ($item) use ($locale) {
+                return (object)[
+                    'icon' => isset($item['icon']) ? asset('storage/' . $item['icon']) : null,
+                    'text' => $item['text_'.$locale] ?? $item['text'] ?? '',
+                ];
+            })->values(),
+        ];
     }
 
-    /**
-     * Создание дефолтной записи.
-     */
+    public function getFirst(string $locale = 'ru'): object
+    {
+        return $this->get($locale);
+    }
+
+    protected function resolveTitle(WhyChooseUs $record, string $locale): string
+    {
+        // Сначала берём отдельное поле title_{locale}
+        if (!empty($record->{'title_'.$locale})) {
+            return $record->{'title_'.$locale};
+        }
+
+        // Если title — JSON-строка
+        if (is_string($record->title)) {
+            $decoded = json_decode($record->title, true);
+
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
+                return $decoded[$locale] ?? $decoded['ru'] ?? '';
+            }
+        }
+
+        // fallback
+        return (string) $record->title;
+    }
+
     protected function createDefault(): WhyChooseUs
     {
         return WhyChooseUs::create([
@@ -71,47 +101,18 @@ class WhyChooseUsService
         ]);
     }
 
-    /**
-     * Форматирование данных под API с учётом языка.
-     */
-    protected function format(WhyChooseUs $record, string $locale): object
+    public function update(array $data): WhyChooseUs
     {
-        return (object) [
-            'title' => $this->resolveTitle($record, $locale),
+        $record = WhyChooseUs::first() ?? WhyChooseUs::create([]);
 
-            'image' => $record->image
-                ? asset('storage/' . $record->image)
-                : null,
+        $record->update([
+            'title' => $data['title'] ?? $record->title,
+            'title_kk' => $data['title_kk'] ?? $record->title_kk,
+            'title_en' => $data['title_en'] ?? $record->title_en,
+            'image' => $data['image'] ?? $record->image,
+            'items' => $data['items'] ?? $record->items,
+        ]);
 
-            'items' => collect($record->items)->map(fn ($item) => [
-                'icon' => !empty($item['icon'])
-                    ? asset('storage/' . $item['icon'])
-                    : null,
-                'text' => $item['text_'.$locale] ?? $item['text'] ?? '',
-            ])->values(),
-        ];
-    }
-
-    /**
-     * Универсально получаем title (строка или JSON)
-     */
-    protected function resolveTitle(WhyChooseUs $record, string $locale): string
-    {
-        // Если есть title_ru / title_kk / title_en — берём их
-        if (!empty($record->{'title_'.$locale})) {
-            return $record->{'title_'.$locale};
-        }
-
-        // Если title — JSON-строка
-        if (is_string($record->title)) {
-            $decoded = json_decode($record->title, true);
-
-            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-                return $decoded[$locale] ?? $decoded['ru'] ?? '';
-            }
-        }
-
-        // Обычная строка
-        return (string) $record->title;
+        return $record;
     }
 }

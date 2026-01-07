@@ -82,18 +82,21 @@ class OperatingAlgorithmForm
                         ->numeric()
                         ->required(),
 
+                    TextInput::make('order')
+                        ->numeric()
+                        ->required(),
+
                     TextInput::make('title')
-                        ->label('Текст (RU)')
-                        ->required()
-                        ->visible(fn ($get) => $get('../../language') === 'ru'),
+                        ->label('Заголовок (RU)')
+                        ->columnSpanFull(),
 
                     TextInput::make('title_kk')
-                        ->label('Текст (KK)')
-                        ->visible(fn ($get) => $get('../../language') === 'kk'),
+                        ->label('Заголовок (KK)')
+                        ->columnSpanFull(),
 
                     TextInput::make('title_en')
-                        ->label('Text (EN)')
-                        ->visible(fn ($get) => $get('../../language') === 'en'),
+                        ->label('Title (EN)')
+                        ->columnSpanFull(),
                 ])
                 ->columns(4)
                 ->defaultItems(3)

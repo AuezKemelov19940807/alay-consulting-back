@@ -127,6 +127,25 @@ class BannerForm
             Repeater::make('sliders')
                 ->relationship('sliders')
                 ->schema([
+
+                    TextInput::make('title')
+                        ->label('Заголовок (RU)')
+                        ->visible(fn($get) => $get('../../language') === 'ru')
+                        ->required()
+                        ->columnSpan('full'),
+
+                    TextInput::make('title_kk')
+                        ->label('Заголовок (KK)')
+                        ->visible(fn($get) => $get('../../language') === 'kk')
+                        ->required()
+                        ->columnSpan('full'),
+
+                    TextInput::make('title_en')
+                        ->label('Title (EN)')
+                        ->visible(fn($get) => $get('../../language') === 'en')
+                        ->required()
+                        ->columnSpan('full'),
+
                     FileUpload::make('image')
                         ->label('Изображение')
                         ->image()

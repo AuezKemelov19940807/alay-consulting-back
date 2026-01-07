@@ -8,6 +8,9 @@ class BannerSlide extends Model
 {
     protected $fillable = [
         'banner_id',
+        'title',
+        'title_en',
+        'title_kk',
         'image',
         'alt',
         'sort_order',
